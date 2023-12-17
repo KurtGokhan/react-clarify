@@ -1,0 +1,175 @@
+---
+sidebar_position: 1
+title: Introduction
+---
+
+import IndexExample from '@site/src/examples/intro';
+
+# JSX Middlewares
+
+JSX Middlewares allows you to change the behavior of JSX renderer by adding middlewares.
+This allows you to enhance JSX with additional features that were not possible before, such as adding support for custom attributes and Angular-like directives.
+
+## Installation
+
+```bash npm2yarn
+npm install react-on
+```
+
+## Setup your JSX transpiler
+
+To use JSX Middlewares, you need to setup your JSX transpiler to use the `react-on/react` package as the JSX factory. This is done differently depending on the transpiler you are using.
+
+<Tabs>
+
+<TabItem value="typescript" label="Typescript">
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "jsxImportSource": "react-on/react"
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="babel" label="Babel">
+
+```json title=".babelrc"
+{
+  "plugins": [
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "importSource": "react-on/react"
+      }
+    ]
+  ]
+}
+```
+
+</TabItem>
+
+<TabItem value="vite" label="Vite">
+
+If you are using Typescript, you can use the Typescript configuration too.
+
+```js title="vite.config.js"
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  esbuild: {
+    jsxImportSource: 'react-on/react',
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="vite-swc" label="Vite SWC">
+
+```js title="vite.config.js"
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+
+export default defineConfig({
+  plugins: [
+    react({
+      jsxImportSource: 'react-on/react',
+    }),
+  ],
+});
+```
+
+</TabItem>
+
+<TabItem value="webpack" label="Webpack">
+
+```js title="webpack.config.js"
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                [
+                  '@babel/plugin-transform-react-jsx',
+                  {
+                    importSource: 'react-on/react',
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="perfile" label="Per file">
+
+Most JSX transpilers allow you to specify the JSX factory per file. This is useful if you want to use JSX Middlewares in only some files.
+
+```jsx title="my-file.jsx"
+/** @jsxImportSource react-on/react */
+
+export function App() {
+  return <h1>Hello World</h1>;
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+## Usage
+
+Firstly, you need to add middlewares at the start of your application.
+
+```jsx title="main.jsx"
+import { addMiddlewares } from 'react-on/react';
+
+addMiddlewares(function emojiMiddleware(next, type, props, key) {
+  // Modify the props to add an emoji to the text
+  if (typeof type === 'string' && typeof props.children === 'string') {
+    props = {
+      ...props,
+      children: props.children + ' 🎉',
+    };
+  }
+
+  // Call the next middleware with the new props
+  // If there is no next middleware, it will call the original JSX renderer
+  return next(type, props, key);
+});
+```
+
+Then, you can write your JSX as usual.
+
+```jsx title="my-file.jsx"
+export function App() {
+  return (
+    <div>
+      <h1>Hello World</h1>
+      <p>This is a paragraph</p>
+    </div>
+  );
+}
+```
+
+The output will be like this:
+
+<IndexExample />
+
+## What's next?
+
+For more examples of what you can do with JSX Middlewares, check out the [examples](/category/examples) section.

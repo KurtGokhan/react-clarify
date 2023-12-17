@@ -1,0 +1,33 @@
+{
+  "folders": [
+    {
+      "name": "🌴 Root",
+      "path": ".."
+    },
+    {
+      "name": "🌐 Website",
+      "path": "../website"
+    },
+    {
+      "name": "🌩️ Vite Example",
+      "path": "../examples/vite"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "website": true,
+      "examples": true
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "npm.packageManager": "yarn",
+    "typescript.preferences.quoteStyle": "single",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "workbench.editor.labelFormat": "medium",
+    "typescript.tsdk": "🌴 Root/node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true
+  }
+}
