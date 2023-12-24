@@ -49,12 +49,13 @@ export type TrackingProps<TBase extends ReactOnBase = ReactOn> = {
   skip?: boolean;
   root?: boolean;
   values?: Partial<TrackingValues<TBase>>;
-  children?: ReactNode;
+  children?: ReactNode | ((ref: TrackingRef<TBase>) => ReactNode);
 };
 
 export interface TrackingRef<TBase extends ReactOnBase = ReactOn> {
   modify: (cb: (val: Readonly<Partial<TrackingValues<TBase>>>) => Partial<TrackingValues<TBase>>) => void;
-  values: Partial<TrackingValues<TBase>>;
+  getValues: () => Partial<TrackingValues<TBase>>;
+  track: TrackFn<TBase>;
 }
 
 export interface TrackingContext<TBase extends ReactOnBase = ReactOn> {
