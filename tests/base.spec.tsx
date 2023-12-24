@@ -1,21 +1,47 @@
 import { render } from '@testing-library/react';
-import { TrackEvent, Tracking, TrackingHandler, TrackingHandlerFn } from 'src';
+import { TrackCallback, TrackEvent } from 'src';
+import { createTrackingWrapper } from './utils';
 
 describe('react-on', () => {
-  test('should work', () => {
-    const spy = jest.fn<void, Parameters<TrackingHandlerFn>>();
+  describe('track-event', () => {
+    test('should work', () => {
+      const { wrapper, spy } = createTrackingWrapper({ values: { a: 5, b: 't' } });
 
-    const { getByTestId } = render(<Tracking values={{ a: 5, b: 't' }}>
-      <TrackingHandler onHandle={spy}>
+      const { getByTestId } = render(
         <TrackEvent event='click'>
-          <button data-testid="test">Click me</button>
-        </TrackEvent>
-      </TrackingHandler>
-    </Tracking>)
+          <button data-testid='button'>Click me</button>
+        </TrackEvent>,
+        { wrapper },
+      );
 
-    const button = getByTestId('test');
-    button.click();
+      getByTestId('button').click();
 
-    expect(spy).toHaveBeenCalledWith({ values: { a: 5, b: 't' }, type: 'click', args: [expect.objectContaining({})] });
+      expect(spy).toHaveBeenCalledWith({
+        values: { a: 5, b: 't' },
+        type: 'click',
+        args: [expect.objectContaining({})],
+      });
+    });
+  });
+
+  describe('track-callback', () => {
+    test('should work', () => {
+      const { wrapper, spy } = createTrackingWrapper({ values: { a: 5, b: 't' } });
+
+      const { getByTestId } = render(
+        <TrackCallback callback='onClick'>
+          <button data-testid='button'>Click me</button>
+        </TrackCallback>,
+        { wrapper },
+      );
+
+      getByTestId('button').click();
+
+      expect(spy).toHaveBeenCalledWith({
+        values: { a: 5, b: 't' },
+        type: 'onClick',
+        args: [expect.objectContaining({})],
+      });
+    });
   });
 });
