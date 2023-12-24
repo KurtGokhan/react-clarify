@@ -3,6 +3,7 @@ const { compilerOptions } = require('./tsconfig.lib');
 
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
+  testEnvironment: 'jsdom',
   transform: {
     '^.+\\.tsx?$': [
       'ts-jest',
@@ -31,7 +32,6 @@ module.exports = {
     '!<rootDir>/out/**',
   ],
   preset: 'ts-jest',
-  testEnvironment: 'node',
   testPathIgnorePatterns: [
     '<rootDir>/artifacts/',
     '<rootDir>/dist/',
