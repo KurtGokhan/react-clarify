@@ -13,7 +13,7 @@ export function createTrackingContext<TBase extends ReactOnBase = ReactOn>() {
   const ctx = createContext<TContext>({ enabled: true, values: {} as TValues });
   const useTrackingContext = () => useContext(ctx);
 
-  const handlerCtx = createContext<THandlerContext>({ handle: () => { } });
+  const handlerCtx = createContext<THandlerContext>({ handle: () => {} });
   const useTrackingHandler = () => useContext(handlerCtx);
 
   const { useTrack, TrackingHandler, ConsoleTrackingHandler } = createTrackingHandlerProvider<TBase>(ctx, handlerCtx);
