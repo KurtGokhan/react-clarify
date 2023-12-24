@@ -19,7 +19,6 @@ export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: 
     stopPropagation,
     preventDefault,
     values,
-    scope,
   }: TProps & { event: EventName }) {
     if (!isElement(children) && !assertType<ReactElement>(children)) {
       throw new Error('Children passed to track directive must be an element with ref');
@@ -28,7 +27,7 @@ export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: 
     const resolvedName = (name ?? event) as TType;
     const track = useTrack();
     const trackFn = useCurrentCallback((ev: HTMLElementEventMap[EventName]) =>
-      track({ type: resolvedName, values: values, args: [ev], scope }),
+      track({ type: resolvedName, values: values, args: [ev] }),
     );
     const handle = useCallback(
       (ev: HTMLElementEventMap[EventName]) => {

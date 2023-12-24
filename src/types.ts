@@ -1,5 +1,5 @@
 /**
- * An interface that can be used to override the default tracking type, scope and values.
+ * An interface that can be used to override the default tracking type, values.
  */
 
 import { ReactNode } from 'react';
@@ -7,14 +7,12 @@ import { ReactNode } from 'react';
 export type SafeString = string & {};
 
 export type DefaultTrackingType = SafeString;
-export type DefaultTrackingScope = 'default' | SafeString;
 export interface DefaultTrackingValues {
   [key: string]: any;
 }
 
 export interface ReactOnBase {
   type?: DefaultTrackingType;
-  scope?: DefaultTrackingScope;
   values?: DefaultTrackingValues;
 }
 
@@ -23,10 +21,6 @@ export interface ReactOn extends ReactOnBase {}
 export type TrackingType<TBase extends ReactOnBase = ReactOn> = TBase extends { type: infer T }
   ? T
   : DefaultTrackingType;
-
-export type TrackingScope<TBase extends ReactOnBase = ReactOn> = TBase extends { scope: infer T }
-  ? T
-  : DefaultTrackingScope;
 
 export type TrackingValues<TBase extends ReactOnBase = ReactOn> = TBase extends { values: infer T }
   ? T
@@ -38,7 +32,6 @@ export type TrackingHandlerObject<
   TArgs extends unknown[] = unknown[],
 > = {
   type: TrackingType<TBase>;
-  scope?: TrackingScope<TBase>;
   values: TValues;
   args: TArgs;
 };
@@ -56,7 +49,6 @@ export type TrackingProps<TBase extends ReactOnBase = ReactOn> = {
   skip?: boolean;
   root?: boolean;
   values?: Partial<TrackingValues<TBase>>;
-  scope?: TrackingScope<TBase>;
   children?: ReactNode;
 };
 
@@ -85,7 +77,6 @@ export interface TrackCallbackProps<TBase extends ReactOnBase = ReactOn> {
   values?: Partial<TrackingValues<TBase>>;
   children?: ReactNode;
   disabled?: boolean;
-  scope?: TrackingScope<TBase>;
 }
 
 export interface TrackEventProps<TBase extends ReactOnBase = ReactOn> {
@@ -93,7 +84,6 @@ export interface TrackEventProps<TBase extends ReactOnBase = ReactOn> {
   stopPropagation?: boolean;
   preventDefault?: boolean;
   values?: Partial<TrackingValues<TBase>>;
-  scope?: TrackingScope<TBase>;
   children?: ReactNode;
   disabled?: boolean;
   eventOptions?: boolean | AddEventListenerOptions;

@@ -13,7 +13,7 @@ export function createTrackCallback<TBase extends ReactOnBase = ReactOn>(useTrac
   function TrackCallback<
     ComponentType = DOMAttributes<any>,
     CallbackName extends PropertyKey = CallbackNames<ComponentType> | (string & {}),
-  >({ children, callback, name, disabled, scope, ...props }: TProps & { callback: CallbackName }) {
+  >({ children, callback, name, disabled, ...props }: TProps & { callback: CallbackName }) {
     if (!isElement(children) && !assertType<ReactElement>(children)) {
       throw new Error('Children passed to track directive must be an element with ref');
     }
@@ -26,7 +26,7 @@ export function createTrackCallback<TBase extends ReactOnBase = ReactOn>(useTrac
     const track = useTrack();
 
     const trackFn = useCurrentCallback((...args: any[]) =>
-      track({ type: resolvedName, values: props.values, args, scope }),
+      track({ type: resolvedName, values: props.values, args }),
     );
 
     const originalCallback = children.props[callback];
