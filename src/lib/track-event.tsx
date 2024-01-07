@@ -3,10 +3,9 @@ import { isElement } from 'react-is';
 import { assertType } from '../helpers/typing';
 import { useCombinedRefs } from '../hooks/use-combined-refs';
 import { useStableCallback } from '../hooks/use-stable-callback';
-import { ReactOn, ReactOnBase, TrackEventProps, TrackFn, TrackingType } from '../types';
+import { ReactOn, ReactOnBase, TrackEventProps, TrackFn } from '../types';
 
 export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: () => TrackFn<TBase>) {
-  type TType = TrackingType<TBase>;
   type TProps = TrackEventProps<TBase>;
 
   function TrackEvent<EventName extends keyof HTMLElementEventMap>({
@@ -24,14 +23,12 @@ export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: 
       throw new Error('Children passed to track directive must be an element with ref');
     }
 
-    const resolvedName = (name ?? event) as TType;
+    const resolvedName = name ?? event;
     const track = useTrack();
-    const trackFn = useStableCallback((ev: HTMLElementEventMap[EventName]) =>
-      track({ type: resolvedName, values: values, args: [ev] }),
-    );
+    const trackFn = useStableCallback((...args: any[]) => track({ values: values, args: [resolvedName, ...args] }));
     const handle = useCallback(
-      (ev: HTMLElementEventMap[EventName]) => {
-        trackFn(ev);
+      (ev: HTMLElementEventMap[EventName], ...args: any[]) => {
+        trackFn(ev, ...args);
         if (stopPropagation) ev.stopPropagation();
         if (preventDefault) ev.preventDefault();
       },

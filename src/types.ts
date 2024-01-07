@@ -1,26 +1,19 @@
-/**
- * An interface that can be used to override the default tracking type, values.
- */
-
 import { ReactNode } from 'react';
 
 export type SafeString = string & {};
 
-export type DefaultTrackingType = SafeString;
 export interface DefaultTrackingValues {
   [key: string]: any;
 }
 
 export interface ReactOnBase {
-  type?: DefaultTrackingType;
   values?: DefaultTrackingValues;
 }
 
+/**
+ * An interface that can be used to override the default tracking type, values.
+ */
 export interface ReactOn extends ReactOnBase {}
-
-export type TrackingType<TBase extends ReactOnBase = ReactOn> = TBase extends { type: infer T }
-  ? T
-  : DefaultTrackingType;
 
 export type TrackingValues<TBase extends ReactOnBase = ReactOn> = TBase extends { values: infer T }
   ? T
@@ -31,7 +24,6 @@ export type TrackingHandlerObject<
   TValues = TrackingValues<TBase>,
   TArgs extends unknown[] = unknown[],
 > = {
-  type: TrackingType<TBase>;
   values: TValues;
   args: TArgs;
 };

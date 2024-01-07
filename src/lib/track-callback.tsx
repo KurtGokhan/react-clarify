@@ -2,12 +2,11 @@ import { cloneElement, DOMAttributes, ReactElement, useCallback } from 'react';
 import { isElement } from 'react-is';
 import { assertType } from '../helpers/typing';
 import { useStableCallback } from '../hooks/use-stable-callback';
-import { ReactOn, ReactOnBase, TrackCallbackProps, TrackFn, TrackingType } from '../types';
+import { ReactOn, ReactOnBase, TrackCallbackProps, TrackFn } from '../types';
 
 type CallbackNames<Props> = keyof { [key in keyof Props as key extends `on${string}` ? key : never]: true };
 
 export function createTrackCallback<TBase extends ReactOnBase = ReactOn>(useTrack: () => TrackFn<TBase>) {
-  type TType = TrackingType<TBase>;
   type TProps = TrackCallbackProps<TBase>;
 
   function TrackCallback<
@@ -22,10 +21,10 @@ export function createTrackCallback<TBase extends ReactOnBase = ReactOn>(useTrac
       throw new Error('Callback name must be provided');
     }
 
-    const resolvedName = (name ?? String(callback)) as TType;
+    const resolvedName = name ?? String(callback);
     const track = useTrack();
 
-    const trackFn = useStableCallback((...args: any[]) => track({ type: resolvedName, values: props.values, args }));
+    const trackFn = useStableCallback((...args: any[]) => track({ values: props.values, args: [resolvedName, ...args] }));
 
     const originalCallback = children.props[callback];
     const handle = useCallback(
