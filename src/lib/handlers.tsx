@@ -1,6 +1,6 @@
 import { Context, PropsWithChildren, useContext, useMemo } from 'react';
-import { useCurrent } from '../hooks/use-current';
-import { useCurrentCallback } from '../hooks/use-current-callback';
+import { useStable } from '../hooks/use-stable';
+import { useStableCallback } from '../hooks/use-stable-callback';
 import {
   ReactOn,
   ReactOnBase,
@@ -23,9 +23,9 @@ export function createTrackingHandlerProvider<TBase extends ReactOnBase = ReactO
   type TTrackFn = TrackFn<TBase>;
 
   function TrackingHandler({ children, ...props }: PropsWithChildren<TProps>) {
-    const propsRef = useCurrent(props);
+    const propsRef = useStable(props);
     const ctxValue = useContext(handlerCtx);
-    const baseHandler = useCurrentCallback(ctxValue.handle);
+    const baseHandler = useStableCallback(ctxValue.handle);
 
     const value = useMemo<THandlerCtx>(
       () => ({
@@ -46,7 +46,7 @@ export function createTrackingHandlerProvider<TBase extends ReactOnBase = ReactO
     message,
     ...props
   }: PropsWithChildren<Omit<TProps, 'onHandle'> & { message?: string }>) {
-    const onHandle = useCurrentCallback<THandlerFn>((options) => {
+    const onHandle = useStableCallback<THandlerFn>((options) => {
       console.log(message || 'Tracked', options);
     });
 
@@ -57,7 +57,7 @@ export function createTrackingHandlerProvider<TBase extends ReactOnBase = ReactO
     const handler = useContext(handlerCtx).handle;
     const ctxValue = useContext(ctx);
 
-    return useCurrentCallback<TTrackFn>((options) => {
+    return useStableCallback<TTrackFn>((options) => {
       if (ctxValue.enabled) {
         handler({ ...options, values: { ...ctxValue.values, ...options?.values } as TValues });
       }

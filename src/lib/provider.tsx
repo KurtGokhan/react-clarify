@@ -1,6 +1,6 @@
 import { Context, forwardRef, useContext, useImperativeHandle, useMemo, useRef } from 'react';
-import { useCurrent } from '../hooks/use-current';
-import { useCurrentCallback } from '../hooks/use-current-callback';
+import { useStable } from '../hooks/use-stable';
+import { useStableCallback } from '../hooks/use-stable-callback';
 import { ReactOn, ReactOnBase, TrackFn, TrackingContext, TrackingProps, TrackingRef, TrackingValues } from '../types';
 
 export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
@@ -26,7 +26,7 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
     };
 
     const currentValues = skip ? baseValues : newValues;
-    const valuesRef = useCurrent(currentValues);
+    const valuesRef = useStable(currentValues);
     const newEnabled = typeof enabled === 'boolean' ? enabled : parentCtx.enabled;
 
     const ctxValue = useMemo<TrackingContext>(
@@ -40,7 +40,7 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
     );
 
     const track = useTrack();
-    const trackFn = useCurrentCallback<TTrackFn>(({ args, type, values }) =>
+    const trackFn = useStableCallback<TTrackFn>(({ args, type, values }) =>
       track({ type, values: { ...currentValues, ...values }, args }),
     );
 

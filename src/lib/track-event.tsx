@@ -2,7 +2,7 @@ import { cloneElement, ReactElement, useCallback, useRef } from 'react';
 import { isElement } from 'react-is';
 import { assertType } from '../helpers/typing';
 import { useCombinedRefs } from '../hooks/use-combined-refs';
-import { useCurrentCallback } from '../hooks/use-current-callback';
+import { useStableCallback } from '../hooks/use-stable-callback';
 import { ReactOn, ReactOnBase, TrackEventProps, TrackFn, TrackingType } from '../types';
 
 export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: () => TrackFn<TBase>) {
@@ -26,7 +26,7 @@ export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: 
 
     const resolvedName = (name ?? event) as TType;
     const track = useTrack();
-    const trackFn = useCurrentCallback((ev: HTMLElementEventMap[EventName]) =>
+    const trackFn = useStableCallback((ev: HTMLElementEventMap[EventName]) =>
       track({ type: resolvedName, values: values, args: [ev] }),
     );
     const handle = useCallback(
