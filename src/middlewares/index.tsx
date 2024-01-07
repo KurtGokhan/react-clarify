@@ -2,12 +2,14 @@ import { addMiddlewares } from 'jsx-middlewares/react';
 import { TrackCallback, TrackEvent, Tracking } from '../default';
 import type { TrackingValues } from '../types';
 
+interface TrackingAttributes {
+  $tracking?: TrackingValues;
+  $trackCallback?: string;
+  $trackEvent?: string;
+}
+
 declare module 'react' {
-  interface Attributes {
-    $tracking?: TrackingValues;
-    $trackCallback?: string;
-    $trackEvent?: string;
-  }
+  interface Attributes extends TrackingAttributes { }
 }
 
 function register() {
