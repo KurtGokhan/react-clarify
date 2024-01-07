@@ -18,8 +18,7 @@ describe('react-on', () => {
 
       expect(spy).toHaveBeenCalledWith({
         values: { a: 5, b: 't' },
-        type: 'click',
-        args: [expect.objectContaining({})],
+        args: ['click', expect.objectContaining({})],
       });
     });
   });
@@ -39,8 +38,7 @@ describe('react-on', () => {
 
       expect(spy).toHaveBeenCalledWith({
         values: { a: 5, b: 't' },
-        type: 'onClick',
-        args: [expect.objectContaining({})],
+        args: ['onClick', expect.objectContaining({})],
       });
     });
   });
