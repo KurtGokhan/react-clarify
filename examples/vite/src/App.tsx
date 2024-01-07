@@ -13,33 +13,28 @@ function App() {
           <div className='card'>
             <section>
               Track with <code>TrackEvent</code>:&nbsp;
-
               <TrackEvent event='click' values={{ count }}>
-                <button onClick={() => setCount((count) => count + 1)}>
-                  Clicked {count} times
-                </button>
+                <button onClick={() => setCount((count) => count + 1)}>Clicked {count} times</button>
               </TrackEvent>
             </section>
 
             <section>
               Track with <code>TrackCallback</code>:&nbsp;
-
               <TrackCallback callback='onClick' values={{ count }}>
-                <button onClick={() => setCount((count) => count + 1)}>
-                  Clicked {count} times
-                </button>
+                <button onClick={() => setCount((count) => count + 1)}>Clicked {count} times</button>
               </TrackCallback>
             </section>
 
             <section>
               Track with <code>Tracking</code>:&nbsp;
-
               <Tracking>
                 {({ track }) => (
-                  <button onClick={(ev) => {
-                    track({ values: { count }, args: ['second-button-click', ev] });
-                    setCount((count) => count + 1);
-                  }}>
+                  <button
+                    onClick={(ev) => {
+                      track({ values: { count }, args: ['second-button-click', ev] });
+                      setCount((count) => count + 1);
+                    }}
+                  >
                     Clicked {count} times
                   </button>
                 )}
@@ -48,8 +43,7 @@ function App() {
 
             <section>
               Track with <code>JSX Middlewares</code>:&nbsp;
-
-              <button $trackEvent="click" onClick={() => setCount((count) => count + 1)}>
+              <button $trackEvent='click' onClick={() => setCount((count) => count + 1)}>
                 Clicked {count} times
               </button>
             </section>

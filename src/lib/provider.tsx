@@ -40,7 +40,9 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
     );
 
     const track = useTrack();
-    const trackFn = useStableCallback<TTrackFn>(({ args, values }) => track({ values: { ...currentValues, ...values }, args }));
+    const trackFn = useStableCallback<TTrackFn>(({ args, values }) =>
+      track({ values: { ...currentValues, ...values }, args }),
+    );
 
     const refImpl: TRef = {
       modify(cb) {

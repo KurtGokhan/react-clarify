@@ -24,7 +24,9 @@ export function createTrackCallback<TBase extends ReactOnBase = ReactOn>(useTrac
     const resolvedName = name ?? String(callback);
     const track = useTrack();
 
-    const trackFn = useStableCallback((...args: any[]) => track({ values: props.values, args: [resolvedName, ...args] }));
+    const trackFn = useStableCallback((...args: any[]) =>
+      track({ values: props.values, args: [resolvedName, ...args] }),
+    );
 
     const originalCallback = children.props[callback];
     const handle = useCallback(

@@ -9,7 +9,7 @@ interface TrackingAttributes {
 }
 
 declare module 'react' {
-  interface Attributes extends TrackingAttributes { }
+  interface Attributes extends TrackingAttributes {}
 }
 
 function register() {
