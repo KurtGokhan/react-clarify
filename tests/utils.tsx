@@ -9,7 +9,9 @@ export function createTrackingWrapper(defaultProps: TrackingProps = {}) {
 
     return (
       <Tracking {...props}>
-        <TrackingHandler onHandle={spy}>{children}</TrackingHandler>
+        {ctx =>
+          <TrackingHandler onHandle={spy}>{typeof children === 'function' ? children(ctx) : children}</TrackingHandler>
+        }
       </Tracking>
     );
   };
