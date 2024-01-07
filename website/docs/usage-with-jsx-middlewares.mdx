@@ -2,3 +2,45 @@
 sidebar_position: 2
 title: Usage with JSX Middlewares
 ---
+
+# Usage with JSX Middlewares
+
+It is possible to use `react-on` with JSX middlewares.
+
+Firstly, you need to install `jsx-middlewares`:
+
+```bash npm2yarn
+npm install jsx-middlewares
+```
+
+Then, you need to set-up `jsx-middlewares` for your project. You can visit docs for how to [setup your JSX transpiler](https://gkurt.com/jsx-middlewares/#setup-your-jsx-transpiler). For most Typescript projects, this should work:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "jsxImportSource": "jsx-middlewares/react"
+  }
+}
+```
+
+Then, import `react-on/middlewares` once in your entry file.
+
+```js title="main.ts"
+import 'react-on/middlewares';
+```
+
+Now, you can use `react-on` with JSX middlewares.
+
+```jsx title="Example.jsx"
+<div $tracking={{ userId: '...', orgId: '...' }}>
+  <button $trackEvent='click'>Click Me</button>
+</div>
+```
+
+Available directives are:
+
+- `$tracking` - Sets tracking context for all children.
+- `$trackEvent` - Tracks the DOM event for the element.
+- `$trackCallback` - Attaches a callback to the element, which triggers a tracking event when called.
+
+For more information about JSX middlewares, please refer to [jsx-middlewares docs](https://gkurt.com/jsx-middlewares/).
