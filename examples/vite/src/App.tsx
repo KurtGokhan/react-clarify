@@ -1,8 +1,8 @@
-import { PropsWithChildren, useState } from 'react';
+import { useState } from 'react';
 import { ConsoleTrackingHandler, TrackCallback, TrackEvent, Tracking } from 'react-on';
 import './App.css';
 
-function App({ children }: PropsWithChildren) {
+function App() {
   const [count, setCount] = useState(0);
 
   return (
@@ -45,9 +45,15 @@ function App({ children }: PropsWithChildren) {
                 )}
               </Tracking>
             </section>
+
+            <section>
+              Track with <code>JSX Middlewares</code>:&nbsp;
+
+              <button $trackEvent="click" onClick={() => setCount((count) => count + 1)}>
+                Clicked {count} times
+              </button>
+            </section>
           </div>
-          <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-          {children}
         </Tracking>
       </ConsoleTrackingHandler>
     </>

@@ -2,9 +2,8 @@
 [![NPM](https://img.shields.io/npm/l/react-on?style=for-the-badge)](https://github.com/KurtGokhan/react-on/blob/main/LICENSE)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/KurtGokhan/react-on/ci.yml?style=for-the-badge)](https://github.com/KurtGokhan/react-on/actions/workflows/ci.yml)
 
-# JSX Middlewares
+# React On
 
-JSX Middlewares allows you to change the behavior of JSX renderer by adding middlewares.
-This allows you to enhance JSX with additional features that were not possible before, such as adding support for custom attributes and Angular-like directives.
+React On is an instruction library for React. It helps you to write declarative user tracking and analytics code. It uses React Context to declare the tracked data.
 
 [Visit the docs →](https://gkurt.com/react-on/)
