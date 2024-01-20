@@ -1,6 +1,5 @@
-import { cloneElement, DOMAttributes, ReactElement, useCallback } from 'react';
+import { cloneElement, DOMAttributes, useCallback } from 'react';
 import { isElement } from 'react-is';
-import { assertType } from '../helpers/typing';
 import { useStableCallback } from '../hooks/use-stable-callback';
 import { ReactOn, ReactOnBase, TrackCallbackProps, TrackFn } from '../types';
 
@@ -13,7 +12,7 @@ export function createTrackCallback<TBase extends ReactOnBase = ReactOn>(useTrac
     ComponentType = DOMAttributes<any>,
     CallbackName extends PropertyKey = CallbackNames<ComponentType> | (string & {}),
   >({ children, callback, name, disabled, ...props }: TProps & { callback: CallbackName }) {
-    if (!isElement(children) && !assertType<ReactElement>(children)) {
+    if (!isElement(children)) {
       throw new Error('Children passed to track directive must be an element with ref');
     }
 

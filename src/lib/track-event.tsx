@@ -1,6 +1,5 @@
-import { cloneElement, ReactElement, useCallback, useRef } from 'react';
+import { cloneElement, useCallback, useRef } from 'react';
 import { isElement } from 'react-is';
-import { assertType } from '../helpers/typing';
 import { useCombinedRefs } from '../hooks/use-combined-refs';
 import { useStableCallback } from '../hooks/use-stable-callback';
 import { ReactOn, ReactOnBase, TrackEventProps, TrackFn } from '../types';
@@ -19,7 +18,7 @@ export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: 
     preventDefault,
     values,
   }: TProps & { event: EventName }) {
-    if (!isElement(children) && !assertType<ReactElement>(children)) {
+    if (!isElement(children)) {
       throw new Error('Children passed to track directive must be an element with ref');
     }
 
