@@ -7,7 +7,14 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["node_modules", "dist", "coverage", "build", "out"]
+    "ignore": [
+      "node_modules",
+      "dist",
+      "coverage",
+      "build",
+      "out",
+      ".docusaurus"
+    ]
   },
   "organizeImports": {
     "enabled": true
