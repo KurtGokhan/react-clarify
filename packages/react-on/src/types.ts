@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type SafeString = string & {};
 
@@ -33,7 +33,7 @@ export type TrackingHandlerFn<TBase extends ReactOnBase = ReactOn> = (
 ) => void;
 
 export type TrackFn<TBase extends ReactOnBase = ReactOn> = (
-  options: TrackingHandlerObject<TBase, Partial<TrackingValues<TBase>> | void>,
+  options: TrackingHandlerObject<TBase, Partial<TrackingValues<TBase>> | undefined>,
 ) => void;
 
 export type TrackingProps<TBase extends ReactOnBase = ReactOn> = {

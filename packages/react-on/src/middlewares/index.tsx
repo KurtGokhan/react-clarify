@@ -1,8 +1,8 @@
 import { addMiddlewares } from 'jsx-middlewares/react';
-import { TrackCallback, TrackEvent, Tracking } from '../default';
+import { TrackCallback, TrackEvent, Tracking } from '..';
 import type { TrackingValues } from '../types';
 
-interface TrackingAttributes {
+export interface TrackingAttributes {
   $tracking?: TrackingValues;
   $trackCallback?: string;
   $trackEvent?: string;

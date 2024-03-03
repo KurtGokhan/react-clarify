@@ -44,7 +44,7 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
       track({ values: { ...currentValues, ...values }, args }),
     );
 
-    const refImpl: TRef = {
+    const refImpl = useStable<TRef>({
       modify(cb) {
         const modification = cb(valuesRef.current);
         Object.assign(modifiedValues.current, modification);
@@ -53,11 +53,11 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
         return valuesRef.current;
       },
       track: trackFn,
-    };
+    });
 
-    useImperativeHandle(ref, () => refImpl, [valuesRef]);
+    useImperativeHandle(ref, () => refImpl.current, [refImpl]);
 
-    const content = typeof children === 'function' ? children(refImpl) : children;
+    const content = typeof children === 'function' ? children(refImpl.current) : children;
 
     return <ctx.Provider value={ctxValue}>{content}</ctx.Provider>;
   });

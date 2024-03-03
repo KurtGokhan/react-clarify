@@ -13,13 +13,14 @@ function setRef<T>(ref: OptionalRef<T>, value: T) {
 export function useCombinedRefs<T>(...refs: OptionalRef<T>[]) {
   const previousRefs = useRef<OptionalRef<T>[]>([]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Hook dependencies are correct and intentionally written like this
   return useCallback((value: T | null) => {
     let index = 0;
     for (; index < refs.length; index++) {
       const ref = refs[index];
       const prev = previousRefs.current[index];
 
-      // eslint-disable-next-line eqeqeq
+      // biome-ignore lint/suspicious/noDoubleEquals: Intentional
       if (prev != ref) setRef(prev, null);
       setRef(ref, value);
     }
@@ -30,7 +31,5 @@ export function useCombinedRefs<T>(...refs: OptionalRef<T>[]) {
     }
 
     previousRefs.current = refs;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, refs);
 }

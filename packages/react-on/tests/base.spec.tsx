@@ -8,8 +8,10 @@ describe('react-on', () => {
       const { wrapper, spy } = createTrackingWrapper({ values: { a: 5, b: 't' } });
 
       const { getByTestId } = render(
-        <TrackEvent event='click'>
-          <button data-testid='button'>Click me</button>
+        <TrackEvent event="click">
+          <button type="button" data-testid="button">
+            Click me
+          </button>
         </TrackEvent>,
         { wrapper },
       );
@@ -28,8 +30,10 @@ describe('react-on', () => {
       const { wrapper, spy } = createTrackingWrapper({ values: { a: 5, b: 't' } });
 
       const { getByTestId } = render(
-        <TrackCallback callback='onClick'>
-          <button data-testid='button'>Click me</button>
+        <TrackCallback callback="onClick">
+          <button type="button" data-testid="button">
+            Click me
+          </button>
         </TrackCallback>,
         { wrapper },
       );

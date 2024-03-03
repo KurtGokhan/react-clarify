@@ -1,4 +1,4 @@
-import { cloneElement, DOMAttributes, useCallback } from 'react';
+import { DOMAttributes, cloneElement, useCallback } from 'react';
 import { isElement } from 'react-is';
 import { useStableCallback } from '../hooks/use-stable-callback';
 import { ReactOn, ReactOnBase, TrackCallbackProps, TrackFn } from '../types';
