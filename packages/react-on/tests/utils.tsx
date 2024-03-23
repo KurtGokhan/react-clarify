@@ -1,4 +1,4 @@
-import { Tracking, TrackingHandler, TrackingHandlerFn, TrackingProps } from 'src';
+import { Tracking, TrackingHandler, type TrackingHandlerFn, type TrackingProps } from 'src';
 export * as userEvent from '@testing-library/user-event';
 
 export function createTrackingWrapper(defaultProps: TrackingProps = {}) {
