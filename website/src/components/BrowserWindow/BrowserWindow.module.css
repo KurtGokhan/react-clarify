@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-.browserWindow {
-  border: 3px solid var(--ifm-color-emphasis-200);
-  border-radius: var(--ifm-global-radius);
-  box-shadow: var(--ifm-global-shadow-lw);
-  margin-bottom: var(--ifm-leading);
+ .browserWindow {
+  border: 3px solid #ebedf0;
+  border-radius: 0.4rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
 }
 
 .browserWindowHeader {
   align-items: center;
-  background: var(--ifm-color-emphasis-200);
+  background: #ebedf0;
   display: flex;
   padding: 0.5rem 1rem;
 }
@@ -42,8 +42,8 @@
   flex: 1 0;
   margin: 0 1rem 0 0.5rem;
   border-radius: 12.5px;
-  background-color: var(--ifm-background-color);
-  color: var(--ifm-color-gray-800);
+  background-color: transparent;
+  color: #444950;
   padding: 5px 15px;
   font:
     400 13px Arial,
@@ -52,7 +52,7 @@
 }
 
 [data-theme='dark'] .browserWindowAddressBar {
-  color: var(--ifm-color-gray-300);
+  color: #dadde1;
 }
 
 .dot {
@@ -78,12 +78,7 @@
 }
 
 .browserWindowBody {
-  background-color: var(--ifm-background-color);
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: inherit;
+  color: black;
+  background-color: #ffffff;
   padding: 1rem;
-}
-
-.browserWindowBody > *:last-child {
-  margin-bottom: 0;
 }

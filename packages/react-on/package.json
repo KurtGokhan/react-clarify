@@ -18,12 +18,10 @@
   "files": ["README.md", "dist"],
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "default": "./dist/index.js"
     },
     "./middlewares": {
-      "default": "./dist/middlewares/index.js",
-      "require": "./dist/middlewares/index.cjs"
+      "default": "./dist/middlewares/index.js"
     }
   },
   "scripts": {

@@ -1,0 +1,35 @@
+.console {
+  background-color: white;
+  color: black;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 16px;
+  overflow: auto;
+  max-height: 120px;
+}
+
+.row {
+  animation: appear 1.5s 1;
+}
+
+@keyframes appear {
+  from {
+    background-color: yellowgreen;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.header {
+  background-color: #eee;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 16px 16px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
