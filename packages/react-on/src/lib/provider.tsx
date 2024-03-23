@@ -16,11 +16,13 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
     const parentCtx = useContext(ctx);
 
     const baseValues: Partial<TValues> = root ? {} : parentCtx.values;
-
-    const newValues: Partial<TValues> = {
-      ...baseValues,
-      ...values,
-    };
+    const newValues =
+      typeof values === 'function'
+        ? values(parentCtx.values)
+        : {
+            ...baseValues,
+            ...values,
+          };
 
     const currentValues = skip ? baseValues : newValues;
     const valuesRef = useStable(currentValues);

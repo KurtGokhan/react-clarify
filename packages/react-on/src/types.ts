@@ -38,7 +38,7 @@ export type TrackingProps<TBase extends ReactOnBase = ReactOn> = {
   enabled?: boolean;
   skip?: boolean;
   root?: boolean;
-  values?: Partial<TrackingValues<TBase>>;
+  values?: Partial<TrackingValues<TBase>> | ((parentValues?: Readonly<TrackingValues<TBase>>) => TrackingValues<TBase>);
   children?: ReactNode | ((ref: TrackingRef<TBase>) => ReactNode);
 };
 
