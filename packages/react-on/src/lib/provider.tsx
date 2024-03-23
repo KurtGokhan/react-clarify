@@ -1,4 +1,4 @@
-import { Context, forwardRef, useContext, useImperativeHandle, useMemo, useRef } from 'react';
+import { Context, forwardRef, useContext, useImperativeHandle, useMemo } from 'react';
 import { useStable } from '../hooks/use-stable';
 import { useStableCallback } from '../hooks/use-stable-callback';
 import { ReactOn, ReactOnBase, TrackFn, TrackingContext, TrackingProps, TrackingRef, TrackingValues } from '../types';
@@ -15,14 +15,11 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
   const Tracking = forwardRef<TRef, TProps>(function _Tracking({ children, enabled, skip, root, values }, ref) {
     const parentCtx = useContext(ctx);
 
-    const modifiedValues = useRef<Partial<TValues>>({});
-
     const baseValues: Partial<TValues> = root ? {} : parentCtx.values;
 
     const newValues: Partial<TValues> = {
       ...baseValues,
       ...values,
-      ...modifiedValues.current,
     };
 
     const currentValues = skip ? baseValues : newValues;
@@ -45,10 +42,6 @@ export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
     );
 
     const refImpl = useStable<TRef>({
-      modify(cb) {
-        const modification = cb(valuesRef.current);
-        Object.assign(modifiedValues.current, modification);
-      },
       getValues() {
         return valuesRef.current;
       },

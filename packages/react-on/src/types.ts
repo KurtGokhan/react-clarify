@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react';
 
-export type SafeString = string & {};
-
 export interface DefaultTrackingValues {
   [key: string]: any;
 }
@@ -45,7 +43,6 @@ export type TrackingProps<TBase extends ReactOnBase = ReactOn> = {
 };
 
 export interface TrackingRef<TBase extends ReactOnBase = ReactOn> {
-  modify: (cb: (val: Readonly<Partial<TrackingValues<TBase>>>) => Partial<TrackingValues<TBase>>) => void;
   getValues: () => Partial<TrackingValues<TBase>>;
   track: TrackFn<TBase>;
 }
