@@ -27,7 +27,7 @@
     }
   },
   "scripts": {
-    "tsc": "tsc -p tsconfig.json",
+    "tsc": "tsc -p tsconfig.app.json",
     "start": "npm run tsc -- --watch --incremental",
     "build": "npm run clean && npm run tsc",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
