@@ -1,7 +1,11 @@
 {
   "name": "react-on-workspace",
+  "private": true,
   "workspaces": ["packages/*", "examples/*", "website"],
   "scripts": {
+    "start": "npm run start --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
     "check": "biome check --apply .",
     "prepare": "husky"
   },
