@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "composite": true,
+    "outDir": "out-tsc",
     "paths": {},
     "noEmit": false,
     "declaration": true,
