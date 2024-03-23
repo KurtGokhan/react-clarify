@@ -1,8 +1,8 @@
-import { Tracking, TrackingHandler, type TrackingHandlerFn, type TrackingProps } from 'src';
+import { Tracking, TrackingHandler, type TrackingHandlerFn, type TrackingProps } from 'react-on';
 export * as userEvent from '@testing-library/user-event';
 
 export function createTrackingWrapper(defaultProps: TrackingProps = {}) {
-  const spy = jest.fn<void, Parameters<TrackingHandlerFn>>();
+  const spy = vi.fn<Parameters<TrackingHandlerFn>>();
 
   const wrapper = (baseProps: TrackingProps) => {
     const { children, ...props } = { ...defaultProps, ...baseProps };

@@ -9,6 +9,7 @@ import type {
   TrackingContext,
   TrackingHandlerContext,
   TrackingHandlerFn,
+  TrackingHandlerObject,
   TrackingHandlerProps,
   TrackingValues,
 } from '../types';
@@ -22,6 +23,7 @@ export function createTrackingHandlerProvider<TBase extends ReactOnBase = ReactO
   type TProps = TrackingHandlerProps<TBase>;
   type THandlerFn = TrackingHandlerFn<TBase>;
   type TTrackFn = TrackFn<TBase>;
+  type TObject = TrackingHandlerObject<TBase, TrackingValues<TBase>>;
 
   function TrackingHandler({ children, ...props }: PropsWithChildren<TProps>) {
     const propsRef = useStable(props);
@@ -45,10 +47,18 @@ export function createTrackingHandlerProvider<TBase extends ReactOnBase = ReactO
 
   function ConsoleTrackingHandler({
     message,
+    level = 'log',
+    transform,
     ...props
-  }: PropsWithChildren<Omit<TProps, 'onHandle'> & { message?: string }>) {
+  }: PropsWithChildren<
+    Omit<TProps, 'onHandle'> & {
+      message?: string;
+      level?: 'log' | 'info' | 'warn' | 'error' | 'debug' | 'trace';
+      transform?: (values: TObject) => unknown;
+    }
+  >) {
     const onHandle = useStableCallback<THandlerFn>((options) => {
-      console.log(message || 'Tracked', options);
+      console[level](message || 'Tracked', typeof transform === 'function' ? transform(options) : options);
     });
 
     return <TrackingHandler {...props} onHandle={onHandle} />;

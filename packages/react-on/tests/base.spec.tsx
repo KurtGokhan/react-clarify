@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { TrackCallback, TrackEvent } from 'src';
+import { TrackCallback, TrackEvent } from 'react-on';
 import { createTrackingWrapper } from './utils';
 
 describe('react-on', () => {

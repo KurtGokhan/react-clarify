@@ -4,15 +4,18 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 import styles from './Console.module.css';
 
-export function Console() {
+export function Console({ override = 'info' }: { override?: 'trace' | 'debug' | 'info' | 'log' | 'warn' | 'error' }) {
   const [items, setItems] = useState<string[]>([]);
 
   const itemsRef = useRef<HTMLDivElement | null>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Must be a biome issue
   useLayoutEffect(() => {
-    const oldConsole = console.info;
+    if (!override) return;
 
-    console.info = (...args: unknown[]) => {
+    const oldConsole = window.console[override];
+
+    window.console[override] = (...args: unknown[]) => {
       oldConsole(...args);
       setItems((current) => [...current, `${args.join(', ')}`]);
 
@@ -22,9 +25,9 @@ export function Console() {
     };
 
     return () => {
-      console.info = oldConsole;
+      window.console[override] = oldConsole;
     };
-  }, []);
+  }, [override]);
 
   return !items.length ? null : (
     <div className={styles.console}>
