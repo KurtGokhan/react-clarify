@@ -1,7 +1,8 @@
-import { Children, ReactElement, cloneElement, useCallback, useRef } from 'react';
+import type { ReactElement } from 'react';
+import { Children, cloneElement, useCallback, useRef } from 'react';
 import { useCombinedRefs } from '../hooks/use-combined-refs';
 import { useStableCallback } from '../hooks/use-stable-callback';
-import { ReactOn, ReactOnBase, TrackEventProps, TrackFn } from '../types';
+import type { ReactOn, ReactOnBase, TrackEventProps, TrackFn } from '../types';
 
 export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: () => TrackFn<TBase>) {
   type TProps = TrackEventProps<TBase>;

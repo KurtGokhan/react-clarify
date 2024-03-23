@@ -1,7 +1,8 @@
-import { Context, PropsWithChildren, useContext, useMemo } from 'react';
+import type { Context, PropsWithChildren } from 'react';
+import { useContext, useMemo } from 'react';
 import { useStable } from '../hooks/use-stable';
 import { useStableCallback } from '../hooks/use-stable-callback';
-import {
+import type {
   ReactOn,
   ReactOnBase,
   TrackFn,

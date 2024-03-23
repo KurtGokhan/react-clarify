@@ -1,7 +1,16 @@
-import { Context, forwardRef, useContext, useImperativeHandle, useMemo } from 'react';
+import type { Context } from 'react';
+import { forwardRef, useContext, useImperativeHandle, useMemo } from 'react';
 import { useStable } from '../hooks/use-stable';
 import { useStableCallback } from '../hooks/use-stable-callback';
-import { ReactOn, ReactOnBase, TrackFn, TrackingContext, TrackingProps, TrackingRef, TrackingValues } from '../types';
+import type {
+  ReactOn,
+  ReactOnBase,
+  TrackFn,
+  TrackingContext,
+  TrackingProps,
+  TrackingRef,
+  TrackingValues,
+} from '../types';
 
 export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
   ctx: Context<TrackingContext<TBase>>,

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { ReactOn, ReactOnBase, TrackingContext, TrackingHandlerContext, TrackingValues } from '../types';
+import type { ReactOn, ReactOnBase, TrackingContext, TrackingHandlerContext, TrackingValues } from '../types';
 import { createTrackingHandlerProvider } from './handlers';
 import { createTrackingProvider } from './provider';
 import { createTrackCallback } from './track-callback';

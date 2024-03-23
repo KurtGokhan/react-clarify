@@ -30,7 +30,7 @@
     "tsc": "tsc -p tsconfig.app.json",
     "start": "npm run tsc -- --watch --incremental",
     "build": "npm run clean && npm run tsc",
-    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "clean": "rimraf dist && rimraf tsconfig.app.tsbuildinfo",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "prepare": "npm run build"

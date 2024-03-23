@@ -1,4 +1,5 @@
-import { ForwardedRef, useCallback, useRef } from 'react';
+import type { ForwardedRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 type OptionalRef<T> = ForwardedRef<T> | undefined;
 
