@@ -8,7 +8,7 @@ export default function Example() {
         <Tracking values={{ page: 'Home Page' }}>
           <p>Clicking the button will log a message to the console and send a tracking event.</p>
 
-          <TrackEvent event="click">
+          <TrackEvent event="click" values={{ element: 'My button' }}>
             <button type="button">Click me</button>
           </TrackEvent>
         </Tracking>
