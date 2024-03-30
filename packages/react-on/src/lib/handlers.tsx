@@ -64,13 +64,13 @@ export function createTrackingHandlerProvider<TBase extends ReactOnBase = ReactO
     return <TrackingHandler {...props} onHandle={onHandle} />;
   }
 
-  function useTrack() {
+  function useTrack({ values }: { values?: Partial<TValues> } = {}) {
     const handler = useContext(handlerCtx).handle;
     const ctxValue = useContext(ctx);
 
     return useStableCallback<TTrackFn>((options) => {
       if (ctxValue.enabled) {
-        handler({ ...options, values: { ...ctxValue.values, ...options?.values } as TValues });
+        handler({ ...options, values: { ...ctxValue.values, ...values, ...options?.values } as TValues });
       }
     });
   }

@@ -23,7 +23,8 @@ export function createTrackEvent<TBase extends ReactOnBase = ReactOn>(useTrack: 
 
     const resolvedName = name ?? event;
     const track = useTrack();
-    const trackFn = useStableCallback((...args: any[]) => track({ values: values, args: [resolvedName, ...args] }));
+    const trackFn = useStableCallback((...args: any[]) => track({ values, args: [resolvedName, ...args] }));
+
     const handle = useCallback(
       (ev: HTMLElementEventMap[EventName], ...args: any[]) => {
         trackFn(ev, ...args);
