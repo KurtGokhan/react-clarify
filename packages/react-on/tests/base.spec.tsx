@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
-import { TrackCallback, TrackEvent } from 'react-on';
+import { TrackCallback, TrackEvent } from 'react-clarify';
 import { createTrackingWrapper } from './utils';
 
-describe('react-on', () => {
+describe('react-clarify', () => {
   describe('track-event', () => {
     test('should work', () => {
       const { wrapper, spy } = createTrackingWrapper({ values: { a: 5, b: 't' } });

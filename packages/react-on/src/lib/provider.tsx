@@ -3,8 +3,8 @@ import { forwardRef, useContext, useImperativeHandle, useMemo } from 'react';
 import { useStable } from '../hooks/use-stable';
 import { useStableCallback } from '../hooks/use-stable-callback';
 import type {
-  ReactOn,
-  ReactOnBase,
+  ReactClarify,
+  ReactClarifyBase,
   TrackFn,
   TrackingContext,
   TrackingProps,
@@ -12,7 +12,7 @@ import type {
   TrackingValues,
 } from '../types';
 
-export function createTrackingProvider<TBase extends ReactOnBase = ReactOn>(
+export function createTrackingProvider<TBase extends ReactClarifyBase = ReactClarify>(
   ctx: Context<TrackingContext<TBase>>,
   useTrack: () => TrackFn<TBase>,
 ) {

@@ -1,5 +1,5 @@
 {
-  "name": "react-on-workspace",
+  "name": "react-clarify-workspace",
   "private": true,
   "workspaces": ["packages/*", "examples/*", "website"],
   "scripts": {

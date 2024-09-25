@@ -1,4 +1,4 @@
-import { Tracking, TrackingHandler, type TrackingHandlerFn, type TrackingProps } from 'react-on';
+import { Tracking, TrackingHandler, type TrackingHandlerFn, type TrackingProps } from 'react-clarify';
 export * as userEvent from '@testing-library/user-event';
 
 export function createTrackingWrapper(defaultProps: TrackingProps = {}) {

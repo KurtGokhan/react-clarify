@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConsoleTrackingHandler, TrackEvent, Tracking } from 'react-on';
+import { ConsoleTrackingHandler, TrackEvent, Tracking } from 'react-clarify';
 
 export default function Example() {
   return (

@@ -1,11 +1,11 @@
 import type { DOMAttributes, ReactElement } from 'react';
 import { Children, cloneElement, useCallback } from 'react';
 import { useStableCallback } from '../hooks/use-stable-callback';
-import type { ReactOn, ReactOnBase, TrackCallbackProps, TrackFn } from '../types';
+import type { ReactClarify, ReactClarifyBase, TrackCallbackProps, TrackFn } from '../types';
 
 type CallbackNames<Props> = keyof { [key in keyof Props as key extends `on${string}` ? key : never]: true };
 
-export function createTrackCallback<TBase extends ReactOnBase = ReactOn>(useTrack: () => TrackFn<TBase>) {
+export function createTrackCallback<TBase extends ReactClarifyBase = ReactClarify>(useTrack: () => TrackFn<TBase>) {
   type TProps = TrackCallbackProps<TBase>;
 
   function TrackCallback<

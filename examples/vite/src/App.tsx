@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ConsoleTrackingHandler, TrackCallback, TrackEvent, Tracking } from 'react-on';
+import { ConsoleTrackingHandler, TrackCallback, TrackEvent, Tracking } from 'react-clarify';
 import './App.css';
 
 function App() {

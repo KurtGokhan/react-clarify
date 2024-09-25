@@ -1,11 +1,11 @@
 {
-  "name": "react-on",
+  "name": "react-clarify",
   "description": "Simple React instrumentation library for tracking user interactions",
   "type": "module",
-  "homepage": "https://gkurt.com/react-on/",
+  "homepage": "https://gkurt.com/react-clarify/",
   "repository": {
     "type": "git",
-    "url": "http://github.com/KurtGokhan/react-on"
+    "url": "http://github.com/KurtGokhan/react-clarify"
   },
   "keywords": ["react", "tracking", "analytics", "instrumentation"],
   "version": "1.0.0",

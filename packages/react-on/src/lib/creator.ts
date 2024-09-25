@@ -1,11 +1,11 @@
 import { createContext, useContext } from 'react';
-import type { ReactOn, ReactOnBase, TrackingContext, TrackingHandlerContext, TrackingValues } from '../types';
+import type { ReactClarify, ReactClarifyBase, TrackingContext, TrackingHandlerContext, TrackingValues } from '../types';
 import { createTrackingHandlerProvider } from './handlers';
 import { createTrackingProvider } from './provider';
 import { createTrackCallback } from './track-callback';
 import { createTrackEvent } from './track-event';
 
-export function createTrackingContext<TBase extends ReactOnBase = ReactOn>() {
+export function createTrackingContext<TBase extends ReactClarifyBase = ReactClarify>() {
   type TContext = TrackingContext<TBase>;
   type THandlerContext = TrackingHandlerContext<TBase>;
   type TValues = TrackingValues<TBase>;
