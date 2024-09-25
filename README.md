@@ -4,6 +4,41 @@
 
 # React Clarify
 
-React Clarify is an instruction library for React. It helps you to write declarative user tracking and analytics code. It uses React Context to declare the tracked data.
+**React Clarify** allows you to add analytics tracking to your React components declaratively, keeping your codebase clean and focused on the core functionality of your app.
 
-[Visit the docs →](https://gkurt.com/react-clarify/)
+## Features
+
+- Declarative analytics integration
+- No need to clutter your components with tracking logic
+- Easy to configure and extend
+- Supports any analytics provider
+- Works seamlessly with React hooks and lifecycle methods
+- Strong Typescript support
+
+## Installation
+
+Install the package via npm or yarn:
+
+```bash
+npm install react-clarify
+# or
+yarn add react-clarify
+```
+
+## Documentation
+
+For detailed documentation, setup instructions, and API references, visit the [official documentation](http://gkurt.com/react-clarify/).
+
+## Why use React Clarify?
+
+- **Simplify your codebase**: Remove the burden of manually adding analytics code throughout your components.
+- **Declarative and maintainable**: Track analytics events as part of your component’s markup, keeping everything readable and maintainable.
+- **Flexible**: Easily integrate with multiple analytics providers or create custom ones.
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request to improve the library.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
