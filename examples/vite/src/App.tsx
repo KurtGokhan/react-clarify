@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ConsoleTrackingHandler, TrackCallback, TrackEvent, Tracking } from 'react-clarify';
+import { ConsoleTrackingHandler, TrackCallback, TrackEvent, TrackingProvider } from 'react-clarify';
 import './App.css';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <ConsoleTrackingHandler>
-        <Tracking data={{ test: '5' }}>
+        <TrackingProvider data={{ test: '5' }}>
           <h1>Vite + React</h1>
           <div className="card">
             <section>
@@ -30,8 +30,8 @@ function App() {
             </section>
 
             <section>
-              Track with <code>Tracking</code>:&nbsp;
-              <Tracking>
+              Track with <code>TrackingProvider</code>:&nbsp;
+              <TrackingProvider>
                 {({ track }) => (
                   <button
                     type="button"
@@ -43,7 +43,7 @@ function App() {
                     Clicked {count} times
                   </button>
                 )}
-              </Tracking>
+              </TrackingProvider>
             </section>
 
             <section>
@@ -53,7 +53,7 @@ function App() {
               </button>
             </section>
           </div>
-        </Tracking>
+        </TrackingProvider>
       </ConsoleTrackingHandler>
     </>
   );

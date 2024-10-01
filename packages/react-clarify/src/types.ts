@@ -34,22 +34,30 @@ export type TrackFn<TBase extends ReactClarifyBase = ReactClarify> = (
   options: TrackingHandlerObject<TBase, Partial<TrackingData<TBase>> | undefined>,
 ) => void;
 
-export type TrackingProps<TBase extends ReactClarifyBase = ReactClarify> = {
-  enabled?: boolean;
-  skip?: boolean;
-  root?: boolean;
-  data?: Partial<TrackingData<TBase>> | ((parentData?: Readonly<TrackingData<TBase>>) => TrackingData<TBase>);
-  children?: ReactNode | ((ref: TrackingRef<TBase>) => ReactNode);
+export type TrackingResolveFn<TBase extends ReactClarifyBase = ReactClarify, TRes = unknown> = (
+  data: Readonly<TrackingData<TBase>>,
+) => TRes;
+
+export type TrackingResolver<TBase extends ReactClarifyBase = ReactClarify> = (props: TrackingProviderProps<TBase>) => {
+  result: TrackingRef<TBase>;
+  content: ReactNode;
 };
 
-export interface TrackingRef<TBase extends ReactClarifyBase = ReactClarify> {
-  getData: () => Partial<TrackingData<TBase>>;
-  track: TrackFn<TBase>;
-}
+export type TrackingProviderProps<TBase extends ReactClarifyBase = ReactClarify> = {
+  enabled?: boolean | TrackingResolveFn<TBase, boolean>;
+  skip?: boolean | TrackingResolveFn<TBase, boolean>;
+  root?: boolean | TrackingResolveFn<TBase, boolean>;
+  data?: Partial<TrackingData<TBase>> | TrackingResolveFn<TBase, TrackingData<TBase>>;
+  children?: ReactNode | ((ref: TrackingRef<TBase>) => ReactNode);
+};
 
 export interface TrackingContext<TBase extends ReactClarifyBase = ReactClarify> {
   readonly enabled: boolean;
   readonly data: Readonly<TrackingData<TBase>>;
+}
+
+export interface TrackingRef<TBase extends ReactClarifyBase = ReactClarify> extends TrackingContext<TBase> {
+  readonly track: TrackFn<TBase>;
 }
 
 export interface TrackingHandlerContext<TBase extends ReactClarifyBase = ReactClarify> {
@@ -62,19 +70,16 @@ export interface TrackingHandlerProps<TBase extends ReactClarifyBase = ReactClar
   onHandle?: TrackingHandlerFn<TBase>;
 }
 
-export interface TrackCallbackProps<TBase extends ReactClarifyBase = ReactClarify> {
+export interface TrackCallbackProps<TBase extends ReactClarifyBase = ReactClarify>
+  extends TrackingProviderProps<TBase> {
   name?: string;
-  data?: Partial<TrackingData<TBase>>;
-  children?: ReactNode;
   disabled?: boolean;
 }
 
-export interface TrackEventProps<TBase extends ReactClarifyBase = ReactClarify> {
+export interface TrackEventProps<TBase extends ReactClarifyBase = ReactClarify> extends TrackingProviderProps<TBase> {
   name?: string;
   stopPropagation?: boolean;
   preventDefault?: boolean;
-  data?: Partial<TrackingData<TBase>>;
-  children?: ReactNode;
   disabled?: boolean;
   eventOptions?: boolean | AddEventListenerOptions;
   refProp?: string;

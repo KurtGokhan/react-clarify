@@ -1,18 +1,18 @@
-import { Tracking, TrackingHandler, type TrackingHandlerFn, type TrackingProps } from 'react-clarify';
+import { TrackingHandler, type TrackingHandlerFn, TrackingProvider, type TrackingProviderProps } from 'react-clarify';
 export * as userEvent from '@testing-library/user-event';
 
-export function createTrackingWrapper(defaultProps: TrackingProps = {}) {
+export function createTrackingWrapper(defaultProps: TrackingProviderProps = {}) {
   const spy = vi.fn<Parameters<TrackingHandlerFn>>();
 
-  const wrapper = (baseProps: TrackingProps) => {
+  const wrapper = (baseProps: TrackingProviderProps) => {
     const { children, ...props } = { ...defaultProps, ...baseProps };
 
     return (
-      <Tracking {...props}>
+      <TrackingProvider {...props}>
         {(ctx) => (
           <TrackingHandler onHandle={spy}>{typeof children === 'function' ? children(ctx) : children}</TrackingHandler>
         )}
-      </Tracking>
+      </TrackingProvider>
     );
   };
 

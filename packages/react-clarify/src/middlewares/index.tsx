@@ -1,5 +1,5 @@
 import { addMiddlewares } from 'jsx-middlewares/react';
-import { TrackCallback, TrackEvent, Tracking } from '..';
+import { TrackCallback, TrackEvent, TrackingProvider } from '..';
 import type { TrackingData } from '../types';
 
 export interface TrackingAttributes {
@@ -39,9 +39,9 @@ function register() {
     function trackingDirective(next, type, { $tracking, ...props }, key) {
       if ($tracking) {
         return (
-          <Tracking data={$tracking} key={key}>
+          <TrackingProvider data={$tracking} key={key}>
             {next(type, props, undefined)}
-          </Tracking>
+          </TrackingProvider>
         );
       }
 

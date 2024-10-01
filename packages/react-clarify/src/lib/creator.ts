@@ -17,12 +17,12 @@ export function createTrackingContext<TBase extends ReactClarifyBase = ReactClar
   const useTrackingHandler = () => useContext(handlerCtx);
 
   const { useTrack, TrackingHandler, ConsoleTrackingHandler } = createTrackingHandlerProvider<TBase>(ctx, handlerCtx);
-  const { Tracking } = createTrackingProvider<TBase>(ctx, useTrack);
-  const { TrackCallback } = createTrackCallback<TBase>(useTrack);
-  const { TrackEvent } = createTrackEvent<TBase>(useTrack);
+  const { TrackingProvider, useResolvedTracking } = createTrackingProvider<TBase>(ctx, useTrack);
+  const { TrackCallback } = createTrackCallback<TBase>(useResolvedTracking);
+  const { TrackEvent } = createTrackEvent<TBase>(useResolvedTracking);
 
   return {
-    Tracking,
+    TrackingProvider,
     useTrackingContext,
     useTrackingHandler,
     useTrack,

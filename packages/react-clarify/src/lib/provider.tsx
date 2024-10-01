@@ -8,7 +8,7 @@ import type {
   TrackFn,
   TrackingContext,
   TrackingData,
-  TrackingProps,
+  TrackingProviderProps,
   TrackingRef,
 } from '../types';
 
@@ -18,51 +18,56 @@ export function createTrackingProvider<TBase extends ReactClarifyBase = ReactCla
 ) {
   type TData = TrackingData<TBase>;
   type TRef = TrackingRef<TBase>;
-  type TProps = TrackingProps<TBase>;
+  type TProps = TrackingProviderProps<TBase>;
   type TTrackFn = TrackFn<TBase>;
 
-  const Tracking = forwardRef<TRef, TProps>(function _Tracking({ children, enabled, skip, root, data }, ref) {
+  function useResolvedTracking({ children, enabled, skip, root, data }: TProps) {
     const parentCtx = useContext(ctx);
 
-    const baseData: Partial<TData> = root ? {} : parentCtx.data;
+    const resolvedRoot = typeof root === 'function' ? root(parentCtx.data) : root;
+
+    const baseData = resolvedRoot ? ({} as TData) : parentCtx.data;
     const newData =
       typeof data === 'function'
         ? data(parentCtx.data)
-        : {
+        : ({
             ...baseData,
             ...data,
-          };
+          } as TData);
 
-    const currentData = skip ? baseData : newData;
+    const resolvedSkip = typeof skip === 'function' ? skip(newData) : skip;
+
+    const currentData = resolvedSkip ? baseData : newData;
     const dataRef = useStable(currentData);
-    const newEnabled = typeof enabled === 'boolean' ? enabled : parentCtx.enabled;
+    const resolvedEnabled = typeof enabled === 'function' ? enabled(currentData) : enabled;
+    const newEnabled = typeof resolvedEnabled === 'boolean' ? resolvedEnabled : parentCtx.enabled;
 
-    const ctxValue = useMemo<TrackingContext>(
+    const track = useTrack();
+    const trackFn = useStableCallback<TTrackFn>(({ args, data }) => track({ data: { ...currentData, ...data }, args }));
+
+    const result = useMemo<TRef>(
       () => ({
+        track: trackFn,
         enabled: newEnabled,
         get data() {
           return dataRef.current;
         },
       }),
-      [newEnabled, dataRef],
+      [newEnabled, dataRef, trackFn],
     );
 
-    const track = useTrack();
-    const trackFn = useStableCallback<TTrackFn>(({ args, data }) => track({ data: { ...currentData, ...data }, args }));
+    const content = typeof children === 'function' ? children(result) : children;
 
-    const refImpl = useStable<TRef>({
-      getData() {
-        return dataRef.current;
-      },
-      track: trackFn,
-    });
+    return { result, content };
+  }
 
-    useImperativeHandle(ref, () => refImpl.current, [refImpl]);
+  const TrackingProvider = forwardRef<TRef, TProps>(function _Tracking(props, ref) {
+    const { result, content } = useResolvedTracking(props);
 
-    const content = typeof children === 'function' ? children(refImpl.current) : children;
+    useImperativeHandle(ref, () => result, [result]);
 
-    return <ctx.Provider value={ctxValue}>{content}</ctx.Provider>;
+    return <ctx.Provider value={result}>{content}</ctx.Provider>;
   });
 
-  return { Tracking };
+  return { TrackingProvider, useResolvedTracking };
 }

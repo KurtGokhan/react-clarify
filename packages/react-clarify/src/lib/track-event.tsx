@@ -1,14 +1,12 @@
 import type { ReactElement } from 'react';
 import { Children, cloneElement, useCallback, useRef } from 'react';
 import { useCombinedRefs } from '../hooks/use-combined-refs';
-import { useStableCallback } from '../hooks/use-stable-callback';
-import type { ReactClarify, ReactClarifyBase, TrackEventProps, TrackFn } from '../types';
+import type { ReactClarify, ReactClarifyBase, TrackEventProps, TrackingResolver } from '../types';
 
-export function createTrackEvent<TBase extends ReactClarifyBase = ReactClarify>(useTrack: () => TrackFn<TBase>) {
+export function createTrackEvent<TBase extends ReactClarifyBase = ReactClarify>(useResolver: TrackingResolver<TBase>) {
   type TProps = TrackEventProps<TBase>;
 
   function TrackEvent<EventName extends keyof HTMLElementEventMap>({
-    children,
     refProp = 'ref',
     event,
     eventOptions,
@@ -16,22 +14,24 @@ export function createTrackEvent<TBase extends ReactClarifyBase = ReactClarify>(
     disabled,
     stopPropagation,
     preventDefault,
-    data,
+    ...props
   }: TProps & { event: EventName }) {
-    children = Children.only(children) as ReactElement;
+    const {
+      content,
+      result: { track },
+    } = useResolver(props);
+
+    const children = Children.only(content) as ReactElement;
     if (!children) throw new Error('Children passed to track directive must be an element with ref');
 
     const resolvedName = name ?? event;
-    const track = useTrack();
-    const trackFn = useStableCallback((...args: any[]) => track({ data, args: [resolvedName, ...args] }));
-
     const handle = useCallback(
       (ev: HTMLElementEventMap[EventName], ...args: any[]) => {
-        trackFn(ev, ...args);
+        track({ args: [resolvedName, ev, ...args], data: {} });
         if (stopPropagation) ev.stopPropagation();
         if (preventDefault) ev.preventDefault();
       },
-      [trackFn, stopPropagation, preventDefault],
+      [track, stopPropagation, preventDefault, resolvedName],
     );
 
     const cleanupRef = useRef<() => void>();
