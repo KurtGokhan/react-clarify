@@ -7,11 +7,11 @@ import type {
   ReactClarifyBase,
   TrackFn,
   TrackingContext,
+  TrackingData,
   TrackingHandlerContext,
   TrackingHandlerFn,
   TrackingHandlerObject,
   TrackingHandlerProps,
-  TrackingValues,
 } from '../types';
 
 export function createTrackingHandlerProvider<TBase extends ReactClarifyBase = ReactClarify>(
@@ -19,11 +19,11 @@ export function createTrackingHandlerProvider<TBase extends ReactClarifyBase = R
   handlerCtx: Context<TrackingHandlerContext<TBase>>,
 ) {
   type THandlerCtx = TrackingHandlerContext<TBase>;
-  type TValues = TrackingValues<TBase>;
+  type TData = TrackingData<TBase>;
   type TProps = TrackingHandlerProps<TBase>;
   type THandlerFn = TrackingHandlerFn<TBase>;
   type TTrackFn = TrackFn<TBase>;
-  type TObject = TrackingHandlerObject<TBase, TrackingValues<TBase>>;
+  type TObject = TrackingHandlerObject<TBase, TrackingData<TBase>>;
 
   function TrackingHandler({ children, ...props }: PropsWithChildren<TProps>) {
     const propsRef = useStable(props);
@@ -54,7 +54,7 @@ export function createTrackingHandlerProvider<TBase extends ReactClarifyBase = R
     Omit<TProps, 'onHandle'> & {
       message?: string;
       level?: 'log' | 'info' | 'warn' | 'error' | 'debug' | 'trace';
-      transform?: (values: TObject) => unknown;
+      transform?: (data: TObject) => unknown;
     }
   >) {
     const onHandle = useStableCallback<THandlerFn>((options) => {
@@ -64,13 +64,13 @@ export function createTrackingHandlerProvider<TBase extends ReactClarifyBase = R
     return <TrackingHandler {...props} onHandle={onHandle} />;
   }
 
-  function useTrack({ values }: { values?: Partial<TValues> } = {}) {
+  function useTrack({ data }: { data?: Partial<TData> } = {}) {
     const handler = useContext(handlerCtx).handle;
     const ctxValue = useContext(ctx);
 
     return useStableCallback<TTrackFn>((options) => {
       if (ctxValue.enabled) {
-        handler({ ...options, values: { ...ctxValue.values, ...values, ...options?.values } as TValues });
+        handler({ ...options, data: { ...ctxValue.data, ...data, ...options?.data } as TData });
       }
     });
   }

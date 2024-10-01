@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import type { ReactClarify, ReactClarifyBase, TrackingContext, TrackingHandlerContext, TrackingValues } from '../types';
+import type { ReactClarify, ReactClarifyBase, TrackingContext, TrackingData, TrackingHandlerContext } from '../types';
 import { createTrackingHandlerProvider } from './handlers';
 import { createTrackingProvider } from './provider';
 import { createTrackCallback } from './track-callback';
@@ -8,9 +8,9 @@ import { createTrackEvent } from './track-event';
 export function createTrackingContext<TBase extends ReactClarifyBase = ReactClarify>() {
   type TContext = TrackingContext<TBase>;
   type THandlerContext = TrackingHandlerContext<TBase>;
-  type TValues = TrackingValues<TBase>;
+  type TData = TrackingData<TBase>;
 
-  const ctx = createContext<TContext>({ enabled: true, values: {} as TValues });
+  const ctx = createContext<TContext>({ enabled: true, data: {} as TData });
   const useTrackingContext = () => useContext(ctx);
 
   const handlerCtx = createContext<THandlerContext>({ handle: () => {} });

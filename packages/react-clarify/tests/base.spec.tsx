@@ -5,7 +5,7 @@ import { createTrackingWrapper } from './utils';
 describe('react-clarify', () => {
   describe('track-event', () => {
     test('should work', () => {
-      const { wrapper, spy } = createTrackingWrapper({ values: { a: 5, b: 't' } });
+      const { wrapper, spy } = createTrackingWrapper({ data: { a: 5, b: 't' } });
 
       const { getByTestId } = render(
         <TrackEvent event="click">
@@ -19,7 +19,7 @@ describe('react-clarify', () => {
       getByTestId('button').click();
 
       expect(spy).toHaveBeenCalledWith({
-        values: { a: 5, b: 't' },
+        data: { a: 5, b: 't' },
         args: ['click', expect.objectContaining({})],
       });
     });
@@ -27,7 +27,7 @@ describe('react-clarify', () => {
 
   describe('track-callback', () => {
     test('should work', () => {
-      const { wrapper, spy } = createTrackingWrapper({ values: { a: 5, b: 't' } });
+      const { wrapper, spy } = createTrackingWrapper({ data: { a: 5, b: 't' } });
 
       const { getByTestId } = render(
         <TrackCallback callback="onClick">
@@ -41,7 +41,7 @@ describe('react-clarify', () => {
       getByTestId('button').click();
 
       expect(spy).toHaveBeenCalledWith({
-        values: { a: 5, b: 't' },
+        data: { a: 5, b: 't' },
         args: ['onClick', expect.objectContaining({})],
       });
     });

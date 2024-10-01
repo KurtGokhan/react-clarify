@@ -16,14 +16,14 @@ export function createTrackEvent<TBase extends ReactClarifyBase = ReactClarify>(
     disabled,
     stopPropagation,
     preventDefault,
-    values,
+    data,
   }: TProps & { event: EventName }) {
     children = Children.only(children) as ReactElement;
     if (!children) throw new Error('Children passed to track directive must be an element with ref');
 
     const resolvedName = name ?? event;
     const track = useTrack();
-    const trackFn = useStableCallback((...args: any[]) => track({ values, args: [resolvedName, ...args] }));
+    const trackFn = useStableCallback((...args: any[]) => track({ data, args: [resolvedName, ...args] }));
 
     const handle = useCallback(
       (ev: HTMLElementEventMap[EventName], ...args: any[]) => {

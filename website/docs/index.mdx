@@ -25,8 +25,8 @@ React Clarify works by defining the tracking context in a cascading manner. Let'
 
 In summary, there are 3 group of components you need to know about:
 
-- `Tracking` is a context provider for defining the values that will be passed to the tracking handler. Values for the nested `Tracking` will be merged together.
-- `TrackingHandler` is for defining a callback function that will be called when a tracking event is fired. `ConsoleTrackingHandler` is a predefined handler for simply logging the tracked values to the console. Handlers can be nested to call them all when a tacking event occurs.
+- `Tracking` is a context provider for defining the data that will be passed to the tracking handler. data for the nested `Tracking` will be merged together.
+- `TrackingHandler` is for defining a callback function that will be called when a tracking event is fired. `ConsoleTrackingHandler` is a predefined handler for simply logging the tracked data to the console. Handlers can be nested to call them all when a tacking event occurs.
 - `TrackEvent` and is used to fire a tracking event when a DOM event occurs. It's children must be a single React component that takes a ref.
   - As an alternative to `TrackEvent`, `TrackCallback` can be used to fire tracking events using not just DOM events, but any arbitrary callback function. It can be used like `<TrackCallback callback="onClick">`.
   - `useTrack` hook can be used to get a function that can be used to fire a tracking event that can be called manually.

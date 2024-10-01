@@ -8,12 +8,12 @@ function App() {
   return (
     <>
       <ConsoleTrackingHandler>
-        <Tracking values={{ test: '5' }}>
+        <Tracking data={{ test: '5' }}>
           <h1>Vite + React</h1>
           <div className="card">
             <section>
               Track with <code>TrackEvent</code>:&nbsp;
-              <TrackEvent event="click" values={{ count }}>
+              <TrackEvent event="click" data={{ count }}>
                 <button type="button" onClick={() => setCount((count) => count + 1)}>
                   Clicked {count} times
                 </button>
@@ -22,7 +22,7 @@ function App() {
 
             <section>
               Track with <code>TrackCallback</code>:&nbsp;
-              <TrackCallback callback="onClick" values={{ count }}>
+              <TrackCallback callback="onClick" data={{ count }}>
                 <button type="button" onClick={() => setCount((count) => count + 1)}>
                   Clicked {count} times
                 </button>
@@ -36,7 +36,7 @@ function App() {
                   <button
                     type="button"
                     onClick={(ev) => {
-                      track({ values: { count }, args: ['second-button-click', ev] });
+                      track({ data: { count }, args: ['second-button-click', ev] });
                       setCount((count) => count + 1);
                     }}
                   >

@@ -7,54 +7,52 @@ import type {
   ReactClarifyBase,
   TrackFn,
   TrackingContext,
+  TrackingData,
   TrackingProps,
   TrackingRef,
-  TrackingValues,
 } from '../types';
 
 export function createTrackingProvider<TBase extends ReactClarifyBase = ReactClarify>(
   ctx: Context<TrackingContext<TBase>>,
   useTrack: () => TrackFn<TBase>,
 ) {
-  type TValues = TrackingValues<TBase>;
+  type TData = TrackingData<TBase>;
   type TRef = TrackingRef<TBase>;
   type TProps = TrackingProps<TBase>;
   type TTrackFn = TrackFn<TBase>;
 
-  const Tracking = forwardRef<TRef, TProps>(function _Tracking({ children, enabled, skip, root, values }, ref) {
+  const Tracking = forwardRef<TRef, TProps>(function _Tracking({ children, enabled, skip, root, data }, ref) {
     const parentCtx = useContext(ctx);
 
-    const baseValues: Partial<TValues> = root ? {} : parentCtx.values;
-    const newValues =
-      typeof values === 'function'
-        ? values(parentCtx.values)
+    const baseData: Partial<TData> = root ? {} : parentCtx.data;
+    const newData =
+      typeof data === 'function'
+        ? data(parentCtx.data)
         : {
-            ...baseValues,
-            ...values,
+            ...baseData,
+            ...data,
           };
 
-    const currentValues = skip ? baseValues : newValues;
-    const valuesRef = useStable(currentValues);
+    const currentData = skip ? baseData : newData;
+    const dataRef = useStable(currentData);
     const newEnabled = typeof enabled === 'boolean' ? enabled : parentCtx.enabled;
 
     const ctxValue = useMemo<TrackingContext>(
       () => ({
         enabled: newEnabled,
-        get values() {
-          return valuesRef.current;
+        get data() {
+          return dataRef.current;
         },
       }),
-      [newEnabled, valuesRef],
+      [newEnabled, dataRef],
     );
 
     const track = useTrack();
-    const trackFn = useStableCallback<TTrackFn>(({ args, values }) =>
-      track({ values: { ...currentValues, ...values }, args }),
-    );
+    const trackFn = useStableCallback<TTrackFn>(({ args, data }) => track({ data: { ...currentData, ...data }, args }));
 
     const refImpl = useStable<TRef>({
-      getValues() {
-        return valuesRef.current;
+      getData() {
+        return dataRef.current;
       },
       track: trackFn,
     });

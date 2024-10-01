@@ -11,7 +11,7 @@ export function createTrackCallback<TBase extends ReactClarifyBase = ReactClarif
   function TrackCallback<
     ComponentType = DOMAttributes<any>,
     CallbackName extends PropertyKey = CallbackNames<ComponentType> | (string & {}),
-  >({ children, callback, name, disabled, values, ...props }: TProps & { callback: CallbackName }) {
+  >({ children, callback, name, disabled, data, ...props }: TProps & { callback: CallbackName }) {
     children = Children.only(children) as ReactElement;
 
     if (!children) throw new Error('Children passed to track directive must be an element with ref');
@@ -19,7 +19,7 @@ export function createTrackCallback<TBase extends ReactClarifyBase = ReactClarif
 
     const resolvedName = name ?? String(callback);
     const track = useTrack();
-    const trackFn = useStableCallback((...args: any[]) => track({ values, args: [resolvedName, ...args] }));
+    const trackFn = useStableCallback((...args: any[]) => track({ data, args: [resolvedName, ...args] }));
 
     const originalCallback = children.props[callback];
     const handle = useCallback(

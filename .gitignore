@@ -37,3 +37,7 @@ next-env.d.ts
 
 # vite
 vite.config.ts.*
+
+# yalc
+.yalc
+yalc.lock
