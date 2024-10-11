@@ -5,7 +5,7 @@
   "homepage": "https://gkurt.com/react-clarify/",
   "repository": {
     "type": "git",
-    "url": "http://github.com/KurtGokhan/react-clarify"
+    "url": "git+ssh://git@github.com/KurtGokhan/react-clarify.git"
   },
   "keywords": ["react", "tracking", "analytics", "instrumentation"],
   "version": "1.0.0",
